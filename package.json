@@ -1,0 +1,15 @@
+{
+  "name": "shootatsight-portal",
+  "version": "1.0.0",
+  "description": "Shoot @ Sight Weddings Client Experience Portal",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "npx http-server ."
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}
