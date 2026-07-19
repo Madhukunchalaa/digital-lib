@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shoot @ Sight Weddings — Client Experience Portal</title>
+    <!-- Google Fonts: Montserrat (body) and Cormorant Garamond (headings) matching previous project theme -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <!-- Top Premium Loading Progress Bar -->
+    <div id="top-loader" class="top-loader"></div>
+
+    <!-- Main App Container -->
+    <div id="app" class="app-container">
+        
+        <!-- ============================================== -->
+        <!-- 1. LOGIN SCREEN -->
+        <!-- ============================================== -->
+        <section id="view-login" class="app-view view-hidden">
+            <div class="login-wrapper">
+                <div class="login-branding">
+                    <img src="assets/logo.png" alt="Shoot @ Sight Logo" class="brand-logo-img" style="height: 50px; margin-bottom: 12px;">
+                    <h1 class="portal-title">SHOOT @ SIGHT</h1>
+                    <p class="portal-subtitle">Digital Client Experience Portal</p>
+                </div>
+                
+                <div class="login-card">
+                    <div class="login-card-header">
+                        <h2>Welcome to Your Memories</h2>
+                        <p>Please enter your private access credentials</p>
+                    </div>
+                    
+                    <form id="login-form" class="login-form">
+                        <div class="form-group">
+                            <label for="login-username">Username or Event Code</label>
+                            <div class="input-wrapper">
+                                <svg class="input-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+                                <input type="text" id="login-username" placeholder="e.g. arun-pavithra" required autocomplete="username">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="login-password">Password</label>
+                            <div class="input-wrapper">
+                                <svg class="input-icon" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                                <input type="password" id="login-password" placeholder="••••••••" required autocomplete="current-password">
+                            </div>
+                        </div>
+
+                        <div class="login-error-message" id="login-error" style="display: none;">
+                            Invalid username or password. Please try again.
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <span>Access Portal</span>
+                            <svg class="btn-icon" viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+                        </button>
+                    </form>
+                </div>
+                <div class="login-footer">
+                    <p>Prepared exclusively for Shoot @ Sight Weddings</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- 2. CLIENT GALLERY SCREEN -->
+        <!-- ============================================== -->
+        <section id="view-gallery" class="app-view view-hidden">
+            <!-- Header/Navbar -->
+            <header class="navbar">
+                <div class="navbar-brand">
+                    <img src="assets/logo.png" alt="Shoot @ Sight Logo" height="40" style="margin-right: 8px;">
+                    <div class="brand-text">
+                        <span class="brand-title" style="font-family: var(--font-heading); font-weight: 700; letter-spacing: 1px;">SHOOT @ SIGHT</span>
+                        <span class="brand-tagline" style="font-size: 0.65rem; letter-spacing: 2px;">Weddings</span>
+                    </div>
+                </div>
+                
+                <div class="navbar-actions">
+                    <span id="gallery-couple-name" class="couple-display">Pavithra & Arun</span>
+                    <button id="btn-face-finder-nav" class="btn btn-gold btn-sm">
+                        <svg class="btn-icon" viewBox="0 0 24 24"><path d="M9 11.75c-.69 0-1.25.56-1.25 1.25s.56 1.25 1.25 1.25 1.25-.56 1.25-1.25-.56-1.25-1.25-1.25zm6 0c-.69 0-1.25.56-1.25 1.25s.56 1.25 1.25 1.25 1.25-.56 1.25-1.25-.56-1.25-1.25-1.25zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8 0-.29.02-.58.07-.87 1.4-.43 2.94-1.14 3.99-2.18 1.66 1.83 4.14 2.9 6.81 2.9.36 0 .72-.02 1.07-.06.77.94 1.9 1.54 3.19 1.54.49 0 .96-.09 1.4-.26-.18 3.86-3.38 6.93-7.53 6.93z"/></svg>
+                        <span>AI Face Finder</span>
+                    </button>
+                    <button id="btn-admin-nav" class="btn btn-outline btn-sm" style="display: none;">
+                        <span>Admin</span>
+                    </button>
+                    <button id="btn-logout" class="btn btn-outline btn-sm icon-only" title="Log Out">
+                        <svg viewBox="0 0 24 24" width="18" height="18"><path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z" fill="currentColor"/></svg>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Hero/Welcome Banner -->
+            <div class="gallery-hero">
+                <div class="hero-content">
+                    <span class="hero-date" id="gallery-event-date">June 20, 2026</span>
+                    <h2 class="hero-title" id="gallery-event-title">The Wedding of Pavithra & Arun</h2>
+                    <p class="hero-subtitle">Capture. Relive. Share the Magic.</p>
+                </div>
+            </div>
+
+            <!-- Toolbar & Controls -->
+            <div class="gallery-toolbar">
+                <!-- Moments Categories -->
+                <div class="category-tabs" id="gallery-categories">
+                    <button class="tab-btn active" data-category="all">All Photos</button>
+                    <button class="tab-btn" data-category="portraits">Portraits</button>
+                    <button class="tab-btn" data-category="ceremony">Ceremony</button>
+                    <button class="tab-btn" data-category="candid">Candids</button>
+                    <button class="tab-btn" data-category="reception">Reception</button>
+                </div>
+                
+                <!-- Batch Actions -->
+                <div class="action-buttons">
+                    <button id="btn-select-mode" class="btn btn-outline btn-sm">
+                        <svg class="btn-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                        <span>Select Multiple</span>
+                    </button>
+                    <button id="btn-download-zip" class="btn btn-primary btn-sm">
+                        <svg class="btn-icon" viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/></svg>
+                        <span>Download All (ZIP)</span>
+                    </button>
+                    <button id="btn-share-gallery" class="btn btn-outline btn-sm" title="Share Private Link">
+                        <svg class="btn-icon" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+                        <span>Share Link</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div id="gallery-grid" class="gallery-grid">
+                <!-- Images injected dynamically via gallery.js -->
+            </div>
+
+            <!-- Gallery Selection Bar (Sticky Bottom) -->
+            <div id="selection-bar" class="selection-bar view-hidden">
+                <div class="selection-info">
+                    <span id="selection-count">0 items selected</span>
+                </div>
+                <div class="selection-actions">
+                    <button id="btn-cancel-select" class="btn btn-outline btn-sm">Cancel</button>
+                    <button id="btn-action-download-selected" class="btn btn-gold btn-sm">Download Selected</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- 3. AI FACE FINDER SCREEN -->
+        <!-- ============================================== -->
+        <section id="view-face-finder" class="app-view view-hidden">
+            <!-- Header -->
+            <header class="navbar">
+                <div class="navbar-brand">
+                    <button id="btn-back-to-gallery" class="btn-back">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                    </button>
+                    <div class="brand-text">
+                        <span class="brand-title">AI FACE FINDER</span>
+                        <span class="brand-tagline">Personalized Memory Search</span>
+                    </div>
+                </div>
+                <div class="navbar-actions">
+                    <span class="step-badge">AI Powered</span>
+                </div>
+            </header>
+
+            <div class="face-finder-container">
+                <div class="face-finder-sidebar">
+                    <div class="scanner-card">
+                        <h3>Find Your Photos</h3>
+                        <p>Upload a clear selfie. Our AI scans all photos in the event to instantly find every image you appear in.</p>
+                        
+                        <!-- Upload Slot -->
+                        <div id="selfie-dropzone" class="selfie-dropzone">
+                            <input type="file" id="selfie-input" accept="image/*" style="display: none;">
+                            <div id="dropzone-prompt" class="dropzone-prompt">
+                                <div class="upload-icon">
+                                    <svg viewBox="0 0 24 24" width="40" height="40" fill="currentColor"><path d="M9 11.75c-.69 0-1.25.56-1.25 1.25s.56 1.25 1.25 1.25 1.25-.56 1.25-1.25-.56-1.25-1.25-1.25zm6 0c-.69 0-1.25.56-1.25 1.25s.56 1.25 1.25 1.25 1.25-.56 1.25-1.25-.56-1.25-1.25-1.25zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8 0-.29.02-.58.07-.87 1.4-.43 2.94-1.14 3.99-2.18 1.66 1.83 4.14 2.9 6.81 2.9.36 0 .72-.02 1.07-.06.77.94 1.9 1.54 3.19 1.54.49 0 .96-.09 1.4-.26-.18 3.86-3.38 6.93-7.53 6.93z"/></svg>
+                                </div>
+                                <p class="primary-text">Drag & drop your selfie here</p>
+                                <p class="secondary-text">or click to browse files</p>
+                            </div>
+                            
+                            <div id="dropzone-preview" class="dropzone-preview view-hidden">
+                                <div class="selfie-frame-wrapper">
+                                    <img id="selfie-preview-img" src="" alt="Selfie preview">
+                                    <!-- Scan Line overlay -->
+                                    <div id="scan-line" class="scan-line"></div>
+                                </div>
+                                <button id="btn-remove-selfie" class="btn-remove" title="Remove selfie">&times;</button>
+                            </div>
+                        </div>
+
+                        <!-- Scan Actions -->
+                        <button id="btn-start-scan" class="btn btn-gold btn-block" disabled>
+                            <span>Initialize Face Scan</span>
+                        </button>
+                    </div>
+
+                    <!-- Match stats -->
+                    <div id="face-finder-stats" class="stats-card view-hidden">
+                        <h4>Scan Status</h4>
+                        <div class="stat-row">
+                            <span class="stat-label">Matching Faces:</span>
+                            <span id="scan-match-count" class="stat-value gold-text">0 found</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Confidence:</span>
+                            <span class="stat-value">98.4%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scan Results Gallery -->
+                <div class="face-finder-results">
+                    <div id="results-placeholder" class="results-placeholder">
+                        <svg viewBox="0 0 24 24" width="48" height="48" fill="currentColor"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                        <h3>Ready for Scanning</h3>
+                        <p>Upload your photo and click "Initialize Face Scan" to see matches here.</p>
+                    </div>
+
+                    <div id="results-scanning" class="results-placeholder view-hidden">
+                        <div class="spinner-sonar"></div>
+                        <h3>Scanning Event Gallery...</h3>
+                        <p>Analyzing facial nodes across all wedding photos</p>
+                        <div class="scan-progress-bar-container">
+                            <div id="scan-progress" class="scan-progress-bar" style="width: 0%;"></div>
+                        </div>
+                        <span id="scan-progress-pct">0%</span>
+                    </div>
+
+                    <div id="results-gallery-container" class="results-gallery-container view-hidden">
+                        <div class="results-header">
+                            <h3>Matched Photos</h3>
+                            <button id="btn-download-matches" class="btn btn-outline btn-sm">
+                                <svg class="btn-icon" viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/></svg>
+                                <span>Download All Matches</span>
+                            </button>
+                        </div>
+                        <div id="face-results-grid" class="gallery-grid">
+                            <!-- Filtered matches injected dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- 4. ADMIN DASHBOARD SCREEN -->
+        <!-- ============================================== -->
+        <section id="view-admin" class="app-view view-hidden">
+            <!-- Header -->
+            <header class="navbar">
+                <div class="navbar-brand">
+                    <img src="assets/logo.png" alt="Shoot @ Sight Logo" height="40" style="margin-right: 8px;">
+                    <div class="brand-text">
+                        <span class="brand-title" style="font-family: var(--font-heading); font-weight: 700; letter-spacing: 1px;">PHOTOGRAPHER DASHBOARD</span>
+                        <span class="brand-tagline" style="font-size: 0.65rem; letter-spacing: 2px;">Shoot @ Sight Admin</span>
+                    </div>
+                </div>
+                <div class="navbar-actions">
+                    <button id="btn-admin-view-gallery" class="btn btn-gold btn-sm">
+                        <span>Go to Client Gallery</span>
+                    </button>
+                    <button id="btn-admin-logout" class="btn btn-outline btn-sm icon-only">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+                    </button>
+                </div>
+            </header>
+
+            <div class="admin-container">
+                <!-- Admin Sidebar Navigation -->
+                <aside class="admin-sidebar">
+                    <div class="admin-tabs">
+                        <button class="admin-tab-btn active" data-admin-tab="events">
+                            <svg class="admin-tab-icon" viewBox="0 0 24 24" width="18" height="18"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2zm-7 5h5v5h-5z"/></svg>
+                            <span>Manage Events</span>
+                        </button>
+                        <button class="admin-tab-btn" data-admin-tab="create-event">
+                            <svg class="admin-tab-icon" viewBox="0 0 24 24" width="18" height="18"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                            <span>Create New Event</span>
+                        </button>
+                        <button class="admin-tab-btn" data-admin-tab="activity-logs">
+                            <svg class="admin-tab-icon" viewBox="0 0 24 24" width="18" height="18"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.31 2.69-6 6-6s6 2.69 6 6-2.69 6-6 6c-1.66 0-3.17-.68-4.28-1.78l-1.42 1.42C8.9 19.36 10.37 20 12 20c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.25 2.52.77-1.28-3.52-2.09V8h-1.5z"/></svg>
+                            <span>Activity Logs</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Stats Widget -->
+                    <div class="stats-panel">
+                        <h3>Portal Health</h3>
+                        <div class="stat-mini">
+                            <div class="stat-mini-number" id="stat-total-events">1</div>
+                            <div class="stat-mini-label">Total Events</div>
+                        </div>
+                        <div class="stat-mini">
+                            <div class="stat-mini-number" id="stat-total-photos">12</div>
+                            <div class="stat-mini-label">Total Photos</div>
+                        </div>
+                        <div class="stat-mini">
+                            <div class="stat-mini-number" id="stat-total-downloads">0</div>
+                            <div class="stat-mini-label">Total Downloads</div>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Admin Main View Area -->
+                <main class="admin-main">
+                    <!-- A. Events Panel -->
+                    <div id="admin-tab-events" class="admin-panel">
+                        <div class="panel-header">
+                            <h2>Active Events</h2>
+                            <p>Manage existing events, view passwords, and upload photos.</p>
+                        </div>
+                        <div class="events-list-container" id="admin-events-list">
+                            <!-- Injected dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- B. Create Event Panel -->
+                    <div id="admin-tab-create-event" class="admin-panel view-hidden">
+                        <div class="panel-header">
+                            <h2>Create New Event</h2>
+                            <p>Register a new couple and set up their digital photo gallery.</p>
+                        </div>
+                        
+                        <form id="create-event-form" class="admin-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="event-title">Event Title</label>
+                                    <input type="text" id="event-title" placeholder="e.g. Wedding of Pavithra & Arun" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="event-couple">Couple Name</label>
+                                    <input type="text" id="event-couple" placeholder="e.g. Pavithra & Arun" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="event-date">Event Date</label>
+                                    <input type="date" id="event-date" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="event-code">Event URL Code / Username</label>
+                                    <input type="text" id="event-code" placeholder="e.g. arun-pavithra" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="event-password">Access Password</label>
+                                    <div class="input-action-group">
+                                        <input type="text" id="event-password" placeholder="Generate or enter password" required>
+                                        <button type="button" id="btn-generate-pw" class="btn btn-outline btn-sm">Generate</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Upload Photo Segment -->
+                            <div class="form-group">
+                                <label>Upload Photos</label>
+                                <div id="admin-upload-zone" class="admin-upload-zone">
+                                    <input type="file" id="admin-photo-input" multiple accept="image/*" style="display: none;">
+                                    <div class="upload-zone-prompt">
+                                        <svg viewBox="0 0 24 24" width="32" height="32" class="upload-cloud-icon"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/></svg>
+                                        <p>Drag & drop photos here or click to browse</p>
+                                        <p class="small-hint">Uploaded photos will be added to the event with customizable category tags.</p>
+                                    </div>
+                                    <div id="admin-upload-preview" class="upload-preview-grid"></div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">
+                                <span>Create Event & Publish</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- C. Logs Panel -->
+                    <div id="admin-tab-activity-logs" class="admin-panel view-hidden">
+                        <div class="panel-header">
+                            <h2>Client Activity Logs</h2>
+                            <p>Real-time audit log of client logins and download activity.</p>
+                        </div>
+                        <div class="logs-container">
+                            <table class="logs-table">
+                                <thead>
+                                    <tr>
+                                        <th>Timestamp</th>
+                                        <th>Event</th>
+                                        <th>Action</th>
+                                        <th>Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-logs-tbody">
+                                    <!-- Dynamic rows -->
+                                    <tr>
+                                        <td colspan="4" class="text-center font-muted">No activity logs recorded yet.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- 5. LIGHTBOX MODAL -->
+        <!-- ============================================== -->
+        <div id="lightbox" class="lightbox view-hidden">
+            <button id="lightbox-close" class="lightbox-close" title="Close Lightbox">&times;</button>
+            <button id="lightbox-prev" class="lightbox-btn lightbox-btn-prev" title="Previous Image">&#10094;</button>
+            <button id="lightbox-next" class="lightbox-btn lightbox-btn-next" title="Next Image">&#10095;</button>
+            
+            <div class="lightbox-content">
+                <img id="lightbox-img" src="" alt="Zoomed View">
+                <div class="lightbox-metadata">
+                    <span id="lightbox-index">Photo 1 of 12</span>
+                    <span id="lightbox-category" class="category-tag">Ceremony</span>
+                    <div class="lightbox-actions">
+                        <button id="lightbox-btn-download" class="btn btn-outline btn-sm">
+                            <svg class="btn-icon" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                            <span>Download</span>
+                        </button>
+                        <button id="lightbox-btn-share" class="btn btn-outline btn-sm">
+                            <span>Share</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- App scripts -->
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>
