@@ -172,17 +172,19 @@ function runFaceScan() {
         
         // Determine matched face tag based on uploaded file name
         const fileName = uploadedSelfieFile.name.toLowerCase();
-        let targetFaceTag = 'bride'; // Default match
-        let detectedLabel = 'Bride (Pavithra)';
-        
-        if (fileName.includes('groom') || fileName.includes('arun') || fileName.includes('man') || fileName.includes('boy')) {
-            targetFaceTag = 'groom';
-            detectedLabel = 'Groom (Arun)';
-        }
-        
-        // Filter event photos matching face tags
         const event = state.activeEvent;
         if (!event) return;
+
+        let targetFaceTag = 'bride'; // Default match
+        let brideName = event.code === 'naveen-kate' ? 'Kate' : 'Pavithra';
+        let groomName = event.code === 'naveen-kate' ? 'Naveen' : 'Arun';
+        
+        let detectedLabel = `Bride (${brideName})`;
+        
+        if (fileName.includes('groom') || fileName.includes('arun') || fileName.includes('naveen') || fileName.includes('man') || fileName.includes('boy')) {
+            targetFaceTag = 'groom';
+            detectedLabel = `Groom (${groomName})`;
+        }
         
         const matchedPhotos = event.photos.filter(photo => photo.faces.includes(targetFaceTag));
         
