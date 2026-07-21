@@ -1451,3 +1451,25 @@ body {
     .lightbox-btn-prev { left: 8px; }
     .lightbox-btn-next { right: 8px; }
 }
+
+/* Match Badge for AI Face Scanner */
+.match-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(20, 20, 25, 0.85);
+    color: var(--gold);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 12px;
+    backdrop-filter: blur(6px);
+    z-index: 5;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.selfie-dropzone.drag-over {
+    border-color: var(--gold) !important;
+    background: rgba(212, 175, 55, 0.08) !important;
+}

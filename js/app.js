@@ -3,7 +3,7 @@
    ========================================================================== */
 
 import { initGallery, loadGallery } from './gallery.js';
-import { initFaceFinder, resetFaceFinder } from './facefinder.js';
+import { initAiScanner, resetAiScanner } from './ai_scanner.js';
 import { initAdmin, updateAdminStats, renderEventsList, renderActivityLogs } from './admin.js';
 
 // Default Demo Event Data
@@ -195,8 +195,12 @@ export function navigateTo(hash) {
                 break;
                 
             case '#face-finder':
+                if (!session || session.role !== 'couple') {
+                    window.location.hash = 'login';
+                    return;
+                }
                 views.faceFinder.classList.remove('view-hidden');
-                resetFaceFinder();
+                resetAiScanner();
                 break;
                 
             case '#admin':
@@ -317,7 +321,7 @@ function init() {
     
     // Initialize components
     initGallery();
-    initFaceFinder();
+    initAiScanner();
     initAdmin();
     
     // Trigger initial route

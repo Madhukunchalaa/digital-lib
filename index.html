@@ -151,7 +151,7 @@
         </section>
 
         <!-- ============================================== -->
-        <!-- 3. AI FACE FINDER SCREEN -->
+        <!-- 3. AI FACE FINDER SCREEN (MADTECH AI ENGINE) -->
         <!-- ============================================== -->
         <section id="view-face-finder" class="app-view view-hidden">
             <!-- Header -->
@@ -161,36 +161,42 @@
                         <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
                     </button>
                     <div class="brand-text">
-                        <span class="brand-title">AI FACE FINDER</span>
-                        <span class="brand-tagline">Personalized Memory Search</span>
+                        <span class="brand-title">AI FACE SEARCH SUITE</span>
+                        <span class="brand-tagline">MadTech Neural Vector Matching</span>
                     </div>
                 </div>
                 <div class="navbar-actions">
-                    <span class="step-badge">AI Powered</span>
+                    <span class="step-badge" style="background: rgba(212,175,55,0.15); color: var(--gold); border: 1px solid var(--gold); font-size: 0.75rem; padding: 4px 12px; border-radius: 20px;">
+                        InsightFace ArcFace 512-D
+                    </span>
                 </div>
             </header>
 
             <div class="face-finder-container">
                 <div class="face-finder-sidebar">
                     <div class="scanner-card">
-                        <h3>Find Your Photos</h3>
-                        <p>Upload a clear selfie. Our AI scans all photos in the event to instantly find every image you appear in.</p>
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                            <h3 style="font-family: var(--font-heading); font-size: 1.25rem;">AI Selfie Console</h3>
+                            <span style="font-size: 0.7rem; color: var(--gold); letter-spacing: 1px; text-transform: uppercase;">Real-Time Neural API</span>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--color-muted); margin-bottom: 20px; line-height: 1.5;">
+                            Upload your photo. MadTech's 512-dimensional vector engine indexes facial geometry to instantly pinpoint your exact wedding photos.
+                        </p>
                         
                         <!-- Upload Slot -->
                         <div id="selfie-dropzone" class="selfie-dropzone">
                             <input type="file" id="selfie-input" accept="image/*" style="display: none;">
                             <div id="dropzone-prompt" class="dropzone-prompt">
                                 <div class="upload-icon">
-                                    <svg viewBox="0 0 24 24" width="40" height="40" fill="currentColor"><path d="M9 11.75c-.69 0-1.25.56-1.25 1.25s.56 1.25 1.25 1.25 1.25-.56 1.25-1.25-.56-1.25-1.25-1.25zm6 0c-.69 0-1.25.56-1.25 1.25s.56 1.25 1.25 1.25 1.25-.56 1.25-1.25-.56-1.25-1.25-1.25zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8 0-.29.02-.58.07-.87 1.4-.43 2.94-1.14 3.99-2.18 1.66 1.83 4.14 2.9 6.81 2.9.36 0 .72-.02 1.07-.06.77.94 1.9 1.54 3.19 1.54.49 0 .96-.09 1.4-.26-.18 3.86-3.38 6.93-7.53 6.93z"/></svg>
+                                    <svg viewBox="0 0 24 24" width="44" height="44" fill="currentColor"><path d="M9 11.75c-.69 0-1.25.56-1.25 1.25s.56 1.25 1.25 1.25 1.25-.56 1.25-1.25-.56-1.25-1.25-1.25zm6 0c-.69 0-1.25.56-1.25 1.25s.56 1.25 1.25 1.25 1.25-.56 1.25-1.25-.56-1.25-1.25-1.25zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8 0-.29.02-.58.07-.87 1.4-.43 2.94-1.14 3.99-2.18 1.66 1.83 4.14 2.9 6.81 2.9.36 0 .72-.02 1.07-.06.77.94 1.9 1.54 3.19 1.54.49 0 .96-.09 1.4-.26-.18 3.86-3.38 6.93-7.53 6.93z"/></svg>
                                 </div>
-                                <p class="primary-text">Drag & drop your selfie here</p>
-                                <p class="secondary-text">or click to browse files</p>
+                                <p class="primary-text" style="font-weight: 600; margin-top: 10px;">Click or Drag & Drop Selfie</p>
+                                <p class="secondary-text" style="font-size: 0.75rem; color: var(--color-muted);">Supports high-res JPG, PNG, WebP</p>
                             </div>
                             
                             <div id="dropzone-preview" class="dropzone-preview view-hidden">
                                 <div class="selfie-frame-wrapper">
                                     <img id="selfie-preview-img" src="" alt="Selfie preview">
-                                    <!-- Scan Line overlay -->
                                     <div id="scan-line" class="scan-line"></div>
                                 </div>
                                 <button id="btn-remove-selfie" class="btn-remove" title="Remove selfie">&times;</button>
@@ -198,48 +204,50 @@
                         </div>
 
                         <!-- Scan Actions -->
-                        <button id="btn-start-scan" class="btn btn-gold btn-block" disabled>
+                        <button id="btn-start-scan" class="btn btn-gold btn-block" disabled style="margin-top: 16px; padding: 14px; font-weight: 700; letter-spacing: 0.5px;">
                             <span>Initialize Face Scan</span>
                         </button>
                     </div>
 
-                    <!-- Match stats -->
-                    <div id="face-finder-stats" class="stats-card view-hidden">
-                        <h4>Scan Status</h4>
-                        <div class="stat-row">
-                            <span class="stat-label">Matching Faces:</span>
-                            <span id="scan-match-count" class="stat-value gold-text">0 found</span>
+                    <!-- Match stats & Confidence gauge -->
+                    <div id="face-finder-stats" class="stats-card view-hidden" style="margin-top: 16px; background: rgba(30, 30, 35, 0.9); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 12px; padding: 16px;">
+                        <h4 style="font-size: 0.9rem; letter-spacing: 1px; color: var(--gold); text-transform: uppercase; margin-bottom: 12px;">AI Neural Verdict</h4>
+                        <div class="stat-row" style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span class="stat-label" style="color: var(--color-muted);">Matched Items:</span>
+                            <span id="scan-match-count" class="stat-value gold-text" style="font-weight: 700;">0 found</span>
                         </div>
-                        <div class="stat-row">
-                            <span class="stat-label">Confidence:</span>
-                            <span class="stat-value">98.4%</span>
+                        <div class="stat-row" style="display: flex; justify-content: space-between;">
+                            <span class="stat-label" style="color: var(--color-muted);">Accuracy Score:</span>
+                            <span id="ai-confidence-value" class="stat-value" style="font-weight: 700; color: #4cd964;">98.8%</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Scan Results Gallery -->
                 <div class="face-finder-results">
-                    <div id="results-placeholder" class="results-placeholder">
-                        <svg viewBox="0 0 24 24" width="48" height="48" fill="currentColor"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-                        <h3>Ready for Scanning</h3>
-                        <p>Upload your photo and click "Initialize Face Scan" to see matches here.</p>
+                    <div id="results-placeholder" class="results-placeholder" style="background: rgba(255, 255, 255, 0.02); border: 1px dashed rgba(212, 175, 55, 0.2); border-radius: 16px; padding: 60px 20px; text-align: center;">
+                        <div style="width: 70px; height: 70px; margin: 0 auto 16px; background: rgba(212, 175, 55, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--gold);">
+                            <svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                        </div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700; margin-bottom: 8px;">Ready for Neural Vector Search</h3>
+                        <p style="color: var(--color-muted); max-width: 450px; margin: 0 auto; font-size: 0.9rem;">Upload a selfie to calculate facial embeddings and display every photo you appear in across the event.</p>
                     </div>
 
-                    <div id="results-scanning" class="results-placeholder view-hidden">
-                        <div class="spinner-sonar"></div>
-                        <h3>Scanning Event Gallery...</h3>
-                        <p>Analyzing facial nodes across all wedding photos</p>
-                        <div class="scan-progress-bar-container">
-                            <div id="scan-progress" class="scan-progress-bar" style="width: 0%;"></div>
+                    <div id="results-scanning" class="results-placeholder view-hidden" style="text-align: center; padding: 60px 20px;">
+                        <div class="spinner-sonar" style="margin: 0 auto 20px;"></div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 700; margin-bottom: 8px;">Indexing Facial Embeddings...</h3>
+                        <p style="color: var(--color-muted); font-size: 0.9rem; margin-bottom: 20px;">Comparing 512-D ArcFace vectors across Cloudflare R2 gallery</p>
+                        <div class="scan-progress-bar-container" style="max-width: 350px; margin: 0 auto 10px; background: rgba(255,255,255,0.1); height: 8px; border-radius: 4px; overflow: hidden;">
+                            <div id="scan-progress" class="scan-progress-bar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #d4af37, #f3e5ab);"></div>
                         </div>
-                        <span id="scan-progress-pct">0%</span>
+                        <span id="scan-progress-pct" style="font-size: 0.9rem; font-weight: 700; color: var(--gold);">0%</span>
                     </div>
 
                     <div id="results-gallery-container" class="results-gallery-container view-hidden">
-                        <div class="results-header">
-                            <h3>Matched Photos</h3>
-                            <button id="btn-download-matches" class="btn btn-outline btn-sm">
-                                <svg class="btn-icon" viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/></svg>
+                        <div class="results-header" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                            <h3 style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700;">Matched Wedding Memories</h3>
+                            <button id="btn-download-matches" class="btn btn-gold btn-sm">
+                                <svg class="btn-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/></svg>
                                 <span>Download All Matches</span>
                             </button>
                         </div>
