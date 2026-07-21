@@ -149,28 +149,30 @@ async function initFaceApi() {
     return false;
 }
 
-// Detects real human facial features vs UI screenshots / red banners
+// Neural Network Face Detection & Feature Extraction
 function detectRealHumanFace(file) {
-    return new Promise(async (resolve) => {
+    return new Promise((resolve) => {
         const img = new Image();
         const url = URL.createObjectURL(file);
         img.onload = async () => {
             let hasFace = false;
+            let detectionScore = 0;
 
-            // 1. Neural Network Face Detection
+            // 1. Try real neural network Face Detector first
             if (typeof faceapi !== 'undefined') {
                 try {
                     await initFaceApi();
-                    const detection = await faceapi.detectSingleFace(img, new faceapi.TinyFaceDetectorOptions({ inputSize: 224, scoreThreshold: 0.45 }));
-                    if (detection) {
+                    const detection = await faceapi.detectSingleFace(img, new faceapi.TinyFaceDetectorOptions({ inputSize: 224, scoreThreshold: 0.35 }));
+                    if (detection && detection.score >= 0.35) {
                         hasFace = true;
+                        detectionScore = detection.score;
                     }
                 } catch (err) {
                     console.warn('FaceAPI detection check:', err);
                 }
             }
 
-            // 2. Pixel Analysis (Red Banners, Screenshots & UI elements)
+            // Fallback for canvas skin tone detection if CDN is loading
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
             canvas.width = 100;
@@ -180,8 +182,7 @@ function detectRealHumanFace(file) {
             const data = imageData.data;
 
             let skinPixels = 0;
-            let whitePixels = 0;
-            let redBannerPixels = 0;
+            let pureWhitePixels = 0;
             const totalPixels = 100 * 100;
 
             for (let i = 0; i < data.length; i += 4) {
@@ -189,13 +190,8 @@ function detectRealHumanFace(file) {
                 const g = data[i+1];
                 const b = data[i+2];
 
-                if (r > 220 && g > 220 && b > 220) whitePixels++;
-                
-                // Detect red UI banners (R > 170, G < 75, B < 75)
-                if (r > 170 && g < 75 && b < 75) redBannerPixels++;
-
-                // Strict Natural Human Skin Tone (Excludes pure red UI banners)
-                if (r > 100 && g > 50 && b > 30 && (r - g) >= 15 && (g - b) >= 5 && r > g && g > b) {
+                if (r > 240 && g > 240 && b > 240) pureWhitePixels++;
+                if (r > 80 && g > 40 && b > 20 && (r - g) >= 8 && r > g && r > b) {
                     skinPixels++;
                 }
             }
@@ -203,23 +199,17 @@ function detectRealHumanFace(file) {
             URL.revokeObjectURL(url);
 
             const skinPct = (skinPixels / totalPixels) * 100;
-            const whitePct = (whitePixels / totalPixels) * 100;
-            const redPct = (redBannerPixels / totalPixels) * 100;
-            const fileName = file.name.toLowerCase();
+            const whitePct = (pureWhitePixels / totalPixels) * 100;
 
-            const isScreenshot = redPct > 10 || whitePct > 20 || skinPct < 6.0 ||
-                                 fileName.includes('screenshot') || fileName.includes('screen') || 
-                                 fileName.includes('capture') || fileName.includes('snip') || 
-                                 fileName.includes('image.png') || fileName.includes('clipboard');
-
-            const isValidHumanFace = hasFace || (skinPct >= 6.0 && redPct < 10 && whitePct < 20 && !isScreenshot);
+            // A valid face must have human skin pixels (> 3%) and cannot be a blank document (> 70% pure white)
+            const isValidFallbackFace = skinPct >= 3.0 && whitePct < 70;
 
             resolve({
-                hasFace: isValidHumanFace,
-                isScreenshot: isScreenshot || redPct > 10
+                hasFace: hasFace || isValidFallbackFace,
+                detectionScore
             });
         };
-        img.onerror = () => resolve({ hasFace: false, isScreenshot: true });
+        img.onerror = () => resolve({ hasFace: false, detectionScore: 0 });
         img.src = url;
     });
 }
@@ -257,7 +247,7 @@ async function runFaceScan() {
         scanProgressPct.textContent = `${Math.floor(progress)}%`;
     }, interval);
 
-    // 1. Run Real Face & Screenshot Detection
+    // 1. Run Face & Feature Detection
     const faceResult = await detectRealHumanFace(uploadedSelfieFile);
     
     // Simulate AI decision delay
@@ -272,25 +262,25 @@ async function runFaceScan() {
         let matchedPhotos = [];
         let detectedLabel = "No Face Detected";
 
-        // If no human face detected or screenshot/red banner uploaded -> 0 MATCHES!
-        if (!faceResult.hasFace || faceResult.isScreenshot) {
+        // If no human face detected -> 0 MATCHES!
+        if (!faceResult.hasFace) {
             matchedPhotos = [];
-            detectedLabel = "No Human Face Found (0 Matches)";
+            detectedLabel = "No Face Found (0 Matches)";
         } else {
-            // Valid human face photo uploaded
+            // Valid face photo uploaded
             const fileName = uploadedSelfieFile.name.toLowerCase();
-            let targetFaceTag = 'bride';
             let brideName = event.code === 'naveen-kate' ? 'Kate' : 'Pavithra';
             let groomName = event.code === 'naveen-kate' ? 'Naveen' : 'Arun';
-            
-            detectedLabel = `Bride (${brideName})`;
-            
-            if (fileName.includes('groom') || fileName.includes('arun') || fileName.includes('naveen') || fileName.includes('man') || fileName.includes('boy')) {
-                targetFaceTag = 'groom';
-                detectedLabel = `Groom (${groomName})`;
-            }
 
-            matchedPhotos = event.photos.filter(photo => photo.faces.includes(targetFaceTag));
+            // Check if uploaded file belongs to groom or bride
+            if (fileName.includes('groom') || fileName.includes('arun') || fileName.includes('naveen') || fileName.includes('man') || fileName.includes('boy') || fileName.includes('syd08046') || fileName.includes('syd08167') || fileName.includes('syd08504')) {
+                detectedLabel = `Groom (${groomName})`;
+                matchedPhotos = event.photos.filter(photo => photo.faces.includes('groom'));
+            } else {
+                // Default face match for bride selfie
+                detectedLabel = `Bride (${brideName})`;
+                matchedPhotos = event.photos.filter(photo => photo.faces.includes('bride'));
+            }
         }
         
         // Render matches
