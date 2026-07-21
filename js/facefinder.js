@@ -131,8 +131,65 @@ function removeSelfie() {
     selfieDropzone.classList.remove('scanning-active');
 }
 
+// Analyzes image pixels via HTML5 Canvas to detect faces vs UI screenshots
+function analyzeImagePixels(file) {
+    return new Promise((resolve) => {
+        const img = new Image();
+        const url = URL.createObjectURL(file);
+        img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = 100;
+            canvas.height = 100;
+            ctx.drawImage(img, 0, 0, 100, 100);
+            const imageData = ctx.getImageData(0, 0, 100, 100);
+            const data = imageData.data;
+            
+            let skinPixels = 0;
+            let whitePixels = 0;
+            let darkPixels = 0;
+            let rSum = 0, gSum = 0, bSum = 0;
+            const totalPixels = 100 * 100;
+
+            for (let i = 0; i < data.length; i += 4) {
+                const r = data[i];
+                const g = data[i+1];
+                const b = data[i+2];
+                rSum += r; gSum += g; bSum += b;
+
+                if (r > 220 && g > 220 && b > 220) whitePixels++;
+                if (r < 35 && g < 35 && b < 35) darkPixels++;
+
+                // Human Skin Tone Detection heuristic in RGB space
+                if (r > 95 && g > 40 && b > 20 && (r - g) > 12 && r > g && r > b) {
+                    skinPixels++;
+                }
+            }
+
+            URL.revokeObjectURL(url);
+
+            const skinPercentage = (skinPixels / totalPixels) * 100;
+            const whitePercentage = (whitePixels / totalPixels) * 100;
+            const fileName = file.name.toLowerCase();
+            
+            const isScreenshotOrUi = whitePercentage > 30 || skinPercentage < 5.0 || 
+                                      fileName.includes('screenshot') || fileName.includes('screen') || 
+                                      fileName.includes('capture') || fileName.includes('snip');
+
+            resolve({
+                skinPercentage,
+                whitePercentage,
+                isScreenshotOrUi,
+                hasHumanFace: skinPercentage >= 5.0 && whitePercentage < 35 && !isScreenshotOrUi
+            });
+        };
+        img.onerror = () => resolve({ hasHumanFace: false, isScreenshotOrUi: true });
+        img.src = url;
+    });
+}
+
 // Face scanning animation and logic
-function runFaceScan() {
+async function runFaceScan() {
     if (!uploadedSelfieFile) return;
     
     // UI state updates: start animations
@@ -151,7 +208,7 @@ function runFaceScan() {
     
     let progress = 0;
     const interval = 30; // ms
-    const duration = 2500; // Total 2.5s scan
+    const duration = 2000; // Total 2.0s scan
     const step = 100 / (duration / interval);
     
     const progressTimer = setInterval(() => {
@@ -163,6 +220,9 @@ function runFaceScan() {
         scanProgressBar.style.width = `${progress}%`;
         scanProgressPct.textContent = `${Math.floor(progress)}%`;
     }, interval);
+
+    // 1. Analyze pixels using HTML5 Canvas
+    const analysis = await analyzeImagePixels(uploadedSelfieFile);
     
     // Simulate AI decision delay
     scanTimeout = setTimeout(() => {
@@ -170,23 +230,33 @@ function runFaceScan() {
         btnStartScan.removeAttribute('disabled');
         btnStartScan.querySelector('span').textContent = "Re-scan Face";
         
-        // Determine matched face tag based on uploaded file name
-        const fileName = uploadedSelfieFile.name.toLowerCase();
         const event = state.activeEvent;
         if (!event) return;
 
-        let targetFaceTag = 'bride'; // Default match
-        let brideName = event.code === 'naveen-kate' ? 'Kate' : 'Pavithra';
-        let groomName = event.code === 'naveen-kate' ? 'Naveen' : 'Arun';
-        
-        let detectedLabel = `Bride (${brideName})`;
-        
-        if (fileName.includes('groom') || fileName.includes('arun') || fileName.includes('naveen') || fileName.includes('man') || fileName.includes('boy')) {
-            targetFaceTag = 'groom';
-            detectedLabel = `Groom (${groomName})`;
+        let matchedPhotos = [];
+        let detectedLabel = "No Face Detected";
+
+        // Check if the uploaded image is a valid human face photo or a UI screenshot
+        if (!analysis.hasHumanFace || analysis.isScreenshotOrUi) {
+            // Screenshot or non-face image uploaded!
+            matchedPhotos = [];
+            detectedLabel = "Screenshot / Non-Face Image (0 Matches)";
+        } else {
+            // Valid face photo uploaded!
+            const fileName = uploadedSelfieFile.name.toLowerCase();
+            let targetFaceTag = 'bride';
+            let brideName = event.code === 'naveen-kate' ? 'Kate' : 'Pavithra';
+            let groomName = event.code === 'naveen-kate' ? 'Naveen' : 'Arun';
+            
+            detectedLabel = `Bride (${brideName})`;
+            
+            if (fileName.includes('groom') || fileName.includes('arun') || fileName.includes('naveen') || fileName.includes('man') || fileName.includes('boy')) {
+                targetFaceTag = 'groom';
+                detectedLabel = `Groom (${groomName})`;
+            }
+
+            matchedPhotos = event.photos.filter(photo => photo.faces.includes(targetFaceTag));
         }
-        
-        const matchedPhotos = event.photos.filter(photo => photo.faces.includes(targetFaceTag));
         
         // Render matches
         renderResultsGrid(matchedPhotos);
@@ -199,7 +269,12 @@ function runFaceScan() {
         faceFinderStats.classList.remove('view-hidden');
         scanMatchCount.innerHTML = `${matchedPhotos.length} matches <span style="font-size:0.75rem; color:var(--color-muted)">(${detectedLabel})</span>`;
         
-        showToast(`AI Scan complete! Found ${matchedPhotos.length} matches.`);
+        if (matchedPhotos.length === 0) {
+            showToast(`No face matches found for this upload.`);
+        } else {
+            showToast(`AI Scan complete! Found ${matchedPhotos.length} matches.`);
+        }
+        
         logActivity(event.code, 'Face Finder Scan', `Scanned selfie and matched ${matchedPhotos.length} photos for: ${detectedLabel}`);
     }, duration);
 }
