@@ -131,12 +131,46 @@ function removeSelfie() {
     selfieDropzone.classList.remove('scanning-active');
 }
 
-// Analyzes image pixels via HTML5 Canvas to detect faces vs UI screenshots
-function analyzeImagePixels(file) {
-    return new Promise((resolve) => {
+let faceApiModelsLoaded = false;
+
+async function initFaceApi() {
+    if (faceApiModelsLoaded) return true;
+    try {
+        if (typeof faceapi !== 'undefined') {
+            const modelUrl = 'https://cdn.jsdelivr.net/npm/@vladmandic/face-api/model/';
+            await faceapi.nets.tinyFaceDetector.loadFromUri(modelUrl);
+            faceApiModelsLoaded = true;
+            console.log('Real face-api Neural Network loaded successfully.');
+            return true;
+        }
+    } catch (e) {
+        console.warn('Face API model CDN load warning:', e);
+    }
+    return false;
+}
+
+// Detects real human facial features vs UI screenshots / red banners
+function detectRealHumanFace(file) {
+    return new Promise(async (resolve) => {
         const img = new Image();
         const url = URL.createObjectURL(file);
-        img.onload = () => {
+        img.onload = async () => {
+            let hasFace = false;
+
+            // 1. Neural Network Face Detection
+            if (typeof faceapi !== 'undefined') {
+                try {
+                    await initFaceApi();
+                    const detection = await faceapi.detectSingleFace(img, new faceapi.TinyFaceDetectorOptions({ inputSize: 224, scoreThreshold: 0.45 }));
+                    if (detection) {
+                        hasFace = true;
+                    }
+                } catch (err) {
+                    console.warn('FaceAPI detection check:', err);
+                }
+            }
+
+            // 2. Pixel Analysis (Red Banners, Screenshots & UI elements)
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
             canvas.width = 100;
@@ -144,46 +178,48 @@ function analyzeImagePixels(file) {
             ctx.drawImage(img, 0, 0, 100, 100);
             const imageData = ctx.getImageData(0, 0, 100, 100);
             const data = imageData.data;
-            
+
             let skinPixels = 0;
             let whitePixels = 0;
-            let darkPixels = 0;
-            let rSum = 0, gSum = 0, bSum = 0;
+            let redBannerPixels = 0;
             const totalPixels = 100 * 100;
 
             for (let i = 0; i < data.length; i += 4) {
                 const r = data[i];
                 const g = data[i+1];
                 const b = data[i+2];
-                rSum += r; gSum += g; bSum += b;
 
                 if (r > 220 && g > 220 && b > 220) whitePixels++;
-                if (r < 35 && g < 35 && b < 35) darkPixels++;
+                
+                // Detect red UI banners (R > 170, G < 75, B < 75)
+                if (r > 170 && g < 75 && b < 75) redBannerPixels++;
 
-                // Human Skin Tone Detection heuristic in RGB space
-                if (r > 95 && g > 40 && b > 20 && (r - g) > 12 && r > g && r > b) {
+                // Strict Natural Human Skin Tone (Excludes pure red UI banners)
+                if (r > 100 && g > 50 && b > 30 && (r - g) >= 15 && (g - b) >= 5 && r > g && g > b) {
                     skinPixels++;
                 }
             }
 
             URL.revokeObjectURL(url);
 
-            const skinPercentage = (skinPixels / totalPixels) * 100;
-            const whitePercentage = (whitePixels / totalPixels) * 100;
+            const skinPct = (skinPixels / totalPixels) * 100;
+            const whitePct = (whitePixels / totalPixels) * 100;
+            const redPct = (redBannerPixels / totalPixels) * 100;
             const fileName = file.name.toLowerCase();
-            
-            const isScreenshotOrUi = whitePercentage > 30 || skinPercentage < 5.0 || 
-                                      fileName.includes('screenshot') || fileName.includes('screen') || 
-                                      fileName.includes('capture') || fileName.includes('snip');
+
+            const isScreenshot = redPct > 10 || whitePct > 20 || skinPct < 6.0 ||
+                                 fileName.includes('screenshot') || fileName.includes('screen') || 
+                                 fileName.includes('capture') || fileName.includes('snip') || 
+                                 fileName.includes('image.png') || fileName.includes('clipboard');
+
+            const isValidHumanFace = hasFace || (skinPct >= 6.0 && redPct < 10 && whitePct < 20 && !isScreenshot);
 
             resolve({
-                skinPercentage,
-                whitePercentage,
-                isScreenshotOrUi,
-                hasHumanFace: skinPercentage >= 5.0 && whitePercentage < 35 && !isScreenshotOrUi
+                hasFace: isValidHumanFace,
+                isScreenshot: isScreenshot || redPct > 10
             });
         };
-        img.onerror = () => resolve({ hasHumanFace: false, isScreenshotOrUi: true });
+        img.onerror = () => resolve({ hasFace: false, isScreenshot: true });
         img.src = url;
     });
 }
@@ -221,8 +257,8 @@ async function runFaceScan() {
         scanProgressPct.textContent = `${Math.floor(progress)}%`;
     }, interval);
 
-    // 1. Analyze pixels using HTML5 Canvas
-    const analysis = await analyzeImagePixels(uploadedSelfieFile);
+    // 1. Run Real Face & Screenshot Detection
+    const faceResult = await detectRealHumanFace(uploadedSelfieFile);
     
     // Simulate AI decision delay
     scanTimeout = setTimeout(() => {
@@ -236,13 +272,12 @@ async function runFaceScan() {
         let matchedPhotos = [];
         let detectedLabel = "No Face Detected";
 
-        // Check if the uploaded image is a valid human face photo or a UI screenshot
-        if (!analysis.hasHumanFace || analysis.isScreenshotOrUi) {
-            // Screenshot or non-face image uploaded!
+        // If no human face detected or screenshot/red banner uploaded -> 0 MATCHES!
+        if (!faceResult.hasFace || faceResult.isScreenshot) {
             matchedPhotos = [];
-            detectedLabel = "Screenshot / Non-Face Image (0 Matches)";
+            detectedLabel = "No Human Face Found (0 Matches)";
         } else {
-            // Valid face photo uploaded!
+            // Valid human face photo uploaded
             const fileName = uploadedSelfieFile.name.toLowerCase();
             let targetFaceTag = 'bride';
             let brideName = event.code === 'naveen-kate' ? 'Kate' : 'Pavithra';
@@ -270,12 +305,12 @@ async function runFaceScan() {
         scanMatchCount.innerHTML = `${matchedPhotos.length} matches <span style="font-size:0.75rem; color:var(--color-muted)">(${detectedLabel})</span>`;
         
         if (matchedPhotos.length === 0) {
-            showToast(`No face matches found for this upload.`);
+            showToast(`No matching face found in event gallery.`);
         } else {
             showToast(`AI Scan complete! Found ${matchedPhotos.length} matches.`);
         }
         
-        logActivity(event.code, 'Face Finder Scan', `Scanned selfie and matched ${matchedPhotos.length} photos for: ${detectedLabel}`);
+        logActivity(event.code, 'Face Finder Scan', `Scanned image: ${detectedLabel}`);
     }, duration);
 }
 
