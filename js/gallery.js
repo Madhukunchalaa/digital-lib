@@ -151,13 +151,18 @@ function renderGalleryGrid(categoryFilter = 'all') {
     }
     
     activePhotosList.forEach((photo, index) => {
+        let fallbackAsset = 'assets/portrait.jpg';
+        if (photo.category === 'ceremony') fallbackAsset = 'assets/ceremony.jpg';
+        if (photo.category === 'candid') fallbackAsset = 'assets/candid.jpg';
+        if (photo.category === 'reception') fallbackAsset = 'assets/reception.jpg';
+
         const item = document.createElement('div');
         item.className = `gallery-item ${selectedPhotoIds.has(photo.id) ? 'selected' : ''}`;
         item.dataset.id = photo.id;
         item.dataset.index = index;
         
         item.innerHTML = `
-            <img src="${photo.url}" alt="${photo.title}" loading="lazy">
+            <img src="${photo.url}" alt="${photo.title}" loading="lazy" onerror="this.onerror=null; this.src='${fallbackAsset}';">
             <div class="gallery-item-checkbox"></div>
             <div class="gallery-item-overlay">
                 <span class="item-moment">${photo.category}</span>

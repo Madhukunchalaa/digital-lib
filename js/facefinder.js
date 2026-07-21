@@ -217,10 +217,15 @@ function renderResultsGrid(photos) {
     }
     
     photos.forEach((photo, index) => {
+        let fallbackAsset = 'assets/portrait.jpg';
+        if (photo.category === 'ceremony') fallbackAsset = 'assets/ceremony.jpg';
+        if (photo.category === 'candid') fallbackAsset = 'assets/candid.jpg';
+        if (photo.category === 'reception') fallbackAsset = 'assets/reception.jpg';
+
         const item = document.createElement('div');
         item.className = 'gallery-item';
         item.innerHTML = `
-            <img src="${photo.url}" alt="${photo.title}">
+            <img src="${photo.url}" alt="${photo.title}" onerror="this.onerror=null; this.src='${fallbackAsset}';">
             <div class="gallery-item-overlay">
                 <span class="item-moment">${photo.category}</span>
                 <div class="item-actions">
