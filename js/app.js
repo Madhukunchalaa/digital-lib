@@ -36,31 +36,31 @@ const DEFAULT_EVENTS = [
         couple: 'Naveen & Kate',
         date: '2026-05-14',
         photos: [
-            { id: 'nk1', url: 'https://pub-7db46d1739c59e5c353934ec82f104ae.r2.dev/NAVEEN%20AND%20KATE/SYD07968.webp', category: 'portraits', title: 'Naveen & Kate Portrait', faces: ['groom', 'bride'] },
-            { id: 'nk2', url: 'https://pub-7db46d1739c59e5c353934ec82f104ae.r2.dev/NAVEEN%20AND%20KATE/SYD07976.webp', category: 'portraits', title: 'Couples Close-up', faces: ['groom', 'bride'] },
-            { id: 'nk3', url: 'https://pub-7db46d1739c59e5c353934ec82f104ae.r2.dev/NAVEEN%20AND%20KATE/SYD08046.webp', category: 'ceremony', title: 'Wedding Rituals', faces: ['bride'] },
-            { id: 'nk4', url: 'https://pub-7db46d1739c59e5c353934ec82f104ae.r2.dev/NAVEEN%20AND%20KATE/SYD08122.webp', category: 'ceremony', title: 'Sacred Vows', faces: ['groom'] },
-            { id: 'nk5', url: 'https://pub-7db46d1739c59e5c353934ec82f104ae.r2.dev/NAVEEN%20AND%20KATE/SYD08132.webp', category: 'ceremony', title: 'Garland Exchange', faces: ['groom', 'bride'] },
-            { id: 'nk6', url: 'https://pub-7db46d1739c59e5c353934ec82f104ae.r2.dev/NAVEEN%20AND%20KATE/SYD08167.webp', category: 'candid', title: 'Joyful Smiles', faces: ['bride'] },
-            { id: 'nk7', url: 'https://pub-7db46d1739c59e5c353934ec82f104ae.r2.dev/NAVEEN%20AND%20KATE/SYD08209.webp', category: 'candid', title: 'Bridal Laughter', faces: ['bride'] },
-            { id: 'nk8', url: 'https://pub-7db46d1739c59e5c353934ec82f104ae.r2.dev/NAVEEN%20AND%20KATE/SYD08264.webp', category: 'candid', title: 'Guest Celebrations', faces: [] },
-            { id: 'nk9', url: 'https://pub-7db46d1739c59e5c353934ec82f104ae.r2.dev/NAVEEN%20AND%20KATE/SYD08292.webp', category: 'portraits', title: 'Sunset Couple Pose', faces: ['groom', 'bride'] },
-            { id: 'nk10', url: 'https://pub-7db46d1739c59e5c353934ec82f104ae.r2.dev/NAVEEN%20AND%20KATE/SYD08295.webp', category: 'portraits', title: 'Romantic Moment', faces: ['groom', 'bride'] },
-            { id: 'nk11', url: 'https://pub-7db46d1739c59e5c353934ec82f104ae.r2.dev/NAVEEN%20AND%20KATE/SYD08301.webp', category: 'ceremony', title: 'Ring Exchange', faces: ['groom', 'bride'] },
-            { id: 'nk12', url: 'https://pub-7db46d1739c59e5c353934ec82f104ae.r2.dev/NAVEEN%20AND%20KATE/SYD08325.webp', category: 'ceremony', title: 'Blessing Ceremony', faces: ['groom', 'bride'] },
-            { id: 'nk13', url: 'https://pub-7db46d1739c59e5c353934ec82f104ae.r2.dev/NAVEEN%20AND%20KATE/SYD08335.webp', category: 'reception', title: 'Grand Entrance', faces: ['groom', 'bride'] },
-            { id: 'nk14', url: 'https://pub-7db46d1739c59e5c353934ec82f104ae.r2.dev/NAVEEN%20AND%20KATE/SYD08347.webp', category: 'reception', title: 'First Dance', faces: ['groom', 'bride'] },
-            { id: 'nk15', url: 'https://pub-7db46d1739c59e5c353934ec82f104ae.r2.dev/NAVEEN%20AND%20KATE/SYD08349.webp', category: 'reception', title: 'Toast & Speeches', faces: ['groom', 'bride'] },
-            { id: 'nk16', url: 'https://pub-7db46d1739c59e5c353934ec82f104ae.r2.dev/NAVEEN%20AND%20KATE/SYD08396.webp', category: 'reception', title: 'Cake Cutting', faces: ['groom', 'bride'] },
-            { id: 'nk17', url: 'https://pub-7db46d1739c59e5c353934ec82f104ae.r2.dev/NAVEEN%20AND%20KATE/SYD08404.webp', category: 'candid', title: 'Family Blessings', faces: ['bride'] },
-            { id: 'nk18', url: 'https://pub-7db46d1739c59e5c353934ec82f104ae.r2.dev/NAVEEN%20AND%20KATE/SYD08450.webp', category: 'candid', title: 'Unscripted Moments', faces: ['bride'] },
-            { id: 'nk19', url: 'https://pub-7db46d1739c59e5c353934ec82f104ae.r2.dev/NAVEEN%20AND%20KATE/SYD08467.webp', category: 'portraits', title: 'Bridal Portrait', faces: ['bride'] },
-            { id: 'nk20', url: 'https://pub-7db46d1739c59e5c353934ec82f104ae.r2.dev/NAVEEN%20AND%20KATE/SYD08504.webp', category: 'portraits', title: 'Groom Sherwani Portrait', faces: ['groom'] },
-            { id: 'nk21', url: 'https://pub-7db46d1739c59e5c353934ec82f104ae.r2.dev/NAVEEN%20AND%20KATE/SYD08510.webp', category: 'ceremony', title: 'Mandap Highlights', faces: ['groom', 'bride'] },
-            { id: 'nk22', url: 'https://pub-7db46d1739c59e5c353934ec82f104ae.r2.dev/NAVEEN%20AND%20KATE/SYD08526.webp', category: 'ceremony', title: 'Saptapadi Pheras', faces: ['groom', 'bride'] },
-            { id: 'nk23', url: 'https://pub-7db46d1739c59e5c353934ec82f104ae.r2.dev/NAVEEN%20AND%20KATE/SYD08556.webp', category: 'reception', title: 'Party Celebrations', faces: ['groom', 'bride'] },
-            { id: 'nk24', url: 'https://pub-7db46d1739c59e5c353934ec82f104ae.r2.dev/NAVEEN%20AND%20KATE/SYD08617.webp', category: 'reception', title: 'Late Night Party', faces: ['groom', 'bride'] },
-            { id: 'nk25', url: 'https://pub-7db46d1739c59e5c353934ec82f104ae.r2.dev/NAVEEN%20AND%20KATE/SYD08653.webp', category: 'portraits', title: 'Final Farewell', faces: ['groom', 'bride'] }
+            { id: 'nk1', url: 'https://pub-53f55a87e6f64c51862dbd0fa933eee1.r2.dev/NAVEEN%20AND%20KATE/SYD07968.webp', category: 'portraits', title: 'Naveen & Kate Portrait', faces: ['groom', 'bride'] },
+            { id: 'nk2', url: 'https://pub-53f55a87e6f64c51862dbd0fa933eee1.r2.dev/NAVEEN%20AND%20KATE/SYD07976.webp', category: 'portraits', title: 'Couples Close-up', faces: ['groom', 'bride'] },
+            { id: 'nk3', url: 'https://pub-53f55a87e6f64c51862dbd0fa933eee1.r2.dev/NAVEEN%20AND%20KATE/SYD08046.webp', category: 'ceremony', title: 'Wedding Rituals', faces: ['bride'] },
+            { id: 'nk4', url: 'https://pub-53f55a87e6f64c51862dbd0fa933eee1.r2.dev/NAVEEN%20AND%20KATE/SYD08122.webp', category: 'ceremony', title: 'Sacred Vows', faces: ['groom'] },
+            { id: 'nk5', url: 'https://pub-53f55a87e6f64c51862dbd0fa933eee1.r2.dev/NAVEEN%20AND%20KATE/SYD08132.webp', category: 'ceremony', title: 'Garland Exchange', faces: ['groom', 'bride'] },
+            { id: 'nk6', url: 'https://pub-53f55a87e6f64c51862dbd0fa933eee1.r2.dev/NAVEEN%20AND%20KATE/SYD08167.webp', category: 'candid', title: 'Joyful Smiles', faces: ['bride'] },
+            { id: 'nk7', url: 'https://pub-53f55a87e6f64c51862dbd0fa933eee1.r2.dev/NAVEEN%20AND%20KATE/SYD08209.webp', category: 'candid', title: 'Bridal Laughter', faces: ['bride'] },
+            { id: 'nk8', url: 'https://pub-53f55a87e6f64c51862dbd0fa933eee1.r2.dev/NAVEEN%20AND%20KATE/SYD08264.webp', category: 'candid', title: 'Guest Celebrations', faces: [] },
+            { id: 'nk9', url: 'https://pub-53f55a87e6f64c51862dbd0fa933eee1.r2.dev/NAVEEN%20AND%20KATE/SYD08292.webp', category: 'portraits', title: 'Sunset Couple Pose', faces: ['groom', 'bride'] },
+            { id: 'nk10', url: 'https://pub-53f55a87e6f64c51862dbd0fa933eee1.r2.dev/NAVEEN%20AND%20KATE/SYD08295.webp', category: 'portraits', title: 'Romantic Moment', faces: ['groom', 'bride'] },
+            { id: 'nk11', url: 'https://pub-53f55a87e6f64c51862dbd0fa933eee1.r2.dev/NAVEEN%20AND%20KATE/SYD08301.webp', category: 'ceremony', title: 'Ring Exchange', faces: ['groom', 'bride'] },
+            { id: 'nk12', url: 'https://pub-53f55a87e6f64c51862dbd0fa933eee1.r2.dev/NAVEEN%20AND%20KATE/SYD08325.webp', category: 'ceremony', title: 'Blessing Ceremony', faces: ['groom', 'bride'] },
+            { id: 'nk13', url: 'https://pub-53f55a87e6f64c51862dbd0fa933eee1.r2.dev/NAVEEN%20AND%20KATE/SYD08335.webp', category: 'reception', title: 'Grand Entrance', faces: ['groom', 'bride'] },
+            { id: 'nk14', url: 'https://pub-53f55a87e6f64c51862dbd0fa933eee1.r2.dev/NAVEEN%20AND%20KATE/SYD08347.webp', category: 'reception', title: 'First Dance', faces: ['groom', 'bride'] },
+            { id: 'nk15', url: 'https://pub-53f55a87e6f64c51862dbd0fa933eee1.r2.dev/NAVEEN%20AND%20KATE/SYD08349.webp', category: 'reception', title: 'Toast & Speeches', faces: ['groom', 'bride'] },
+            { id: 'nk16', url: 'https://pub-53f55a87e6f64c51862dbd0fa933eee1.r2.dev/NAVEEN%20AND%20KATE/SYD08396.webp', category: 'reception', title: 'Cake Cutting', faces: ['groom', 'bride'] },
+            { id: 'nk17', url: 'https://pub-53f55a87e6f64c51862dbd0fa933eee1.r2.dev/NAVEEN%20AND%20KATE/SYD08404.webp', category: 'candid', title: 'Family Blessings', faces: ['bride'] },
+            { id: 'nk18', url: 'https://pub-53f55a87e6f64c51862dbd0fa933eee1.r2.dev/NAVEEN%20AND%20KATE/SYD08450.webp', category: 'candid', title: 'Unscripted Moments', faces: ['bride'] },
+            { id: 'nk19', url: 'https://pub-53f55a87e6f64c51862dbd0fa933eee1.r2.dev/NAVEEN%20AND%20KATE/SYD08467.webp', category: 'portraits', title: 'Bridal Portrait', faces: ['bride'] },
+            { id: 'nk20', url: 'https://pub-53f55a87e6f64c51862dbd0fa933eee1.r2.dev/NAVEEN%20AND%20KATE/SYD08504.webp', category: 'portraits', title: 'Groom Sherwani Portrait', faces: ['groom'] },
+            { id: 'nk21', url: 'https://pub-53f55a87e6f64c51862dbd0fa933eee1.r2.dev/NAVEEN%20AND%20KATE/SYD08510.webp', category: 'ceremony', title: 'Mandap Highlights', faces: ['groom', 'bride'] },
+            { id: 'nk22', url: 'https://pub-53f55a87e6f64c51862dbd0fa933eee1.r2.dev/NAVEEN%20AND%20KATE/SYD08526.webp', category: 'ceremony', title: 'Saptapadi Pheras', faces: ['groom', 'bride'] },
+            { id: 'nk23', url: 'https://pub-53f55a87e6f64c51862dbd0fa933eee1.r2.dev/NAVEEN%20AND%20KATE/SYD08556.webp', category: 'reception', title: 'Party Celebrations', faces: ['groom', 'bride'] },
+            { id: 'nk24', url: 'https://pub-53f55a87e6f64c51862dbd0fa933eee1.r2.dev/NAVEEN%20AND%20KATE/SYD08617.webp', category: 'reception', title: 'Late Night Party', faces: ['groom', 'bride'] },
+            { id: 'nk25', url: 'https://pub-53f55a87e6f64c51862dbd0fa933eee1.r2.dev/NAVEEN%20AND%20KATE/SYD08653.webp', category: 'portraits', title: 'Final Farewell', faces: ['groom', 'bride'] }
         ]
     }
 ];
@@ -73,11 +73,14 @@ export function getEvents() {
         return DEFAULT_EVENTS;
     }
     let parsed = JSON.parse(events);
-    // Auto sync naveen-kate if missing in localStorage
-    if (!parsed.find(e => e.code === 'naveen-kate')) {
+    // Auto sync naveen-kate with working Cloudflare R2 URLs
+    const idx = parsed.findIndex(e => e.code === 'naveen-kate');
+    if (idx === -1) {
         parsed.push(DEFAULT_EVENTS[1]);
-        localStorage.setItem('sas_events', JSON.stringify(parsed));
+    } else {
+        parsed[idx].photos = DEFAULT_EVENTS[1].photos;
     }
+    localStorage.setItem('sas_events', JSON.stringify(parsed));
     return parsed;
 }
 
